@@ -7,6 +7,7 @@ import { Preloader } from '@ui';
 
 //import { useEffect } from 'react';
 //import { useSelector, useDispatch } from '../../services/store';
+import { useSelector } from 'react-redux';
 import {
   getIngredients,
   getIngredientsLoading,
@@ -31,9 +32,9 @@ const App = () => {
   //const isIngredientsLoading = false;
   //const ingredients = [];
   //const error = null;
-  const isIngredientsLoading = getIngredientsLoading;
-  const ingredients = getIngredients;
-  const error = getIngredientsError;
+  const isIngredientsLoading = useSelector(getIngredientsLoading);
+  const ingredients = useSelector(getIngredients);
+  const error = useSelector(getIngredientsError);
 
   return (
     <div className={styles.app}>
