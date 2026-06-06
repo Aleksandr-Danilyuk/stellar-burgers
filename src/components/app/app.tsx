@@ -5,10 +5,10 @@ import styles from './app.module.css';
 import { AppHeader } from '@components';
 import { Preloader } from '@ui';
 
-//import { useEffect } from 'react';
-//import { useSelector, useDispatch } from '../../services/store';
-import { useSelector } from 'react-redux';
+import { useEffect } from 'react';
+import { useSelector, useDispatch } from '../../services/store';
 import {
+  fetchIngredientsThunk,
   getIngredients,
   getIngredientsLoading,
   getIngredientsError
@@ -32,9 +32,14 @@ const App = () => {
   //const isIngredientsLoading = false;
   //const ingredients = [];
   //const error = null;
+  const dispatch = useDispatch();
   const isIngredientsLoading = useSelector(getIngredientsLoading);
   const ingredients = useSelector(getIngredients);
   const error = useSelector(getIngredientsError);
+
+  useEffect(() => {
+    dispatch(fetchIngredientsThunk());
+  }, [dispatch]);
 
   return (
     <div className={styles.app}>
