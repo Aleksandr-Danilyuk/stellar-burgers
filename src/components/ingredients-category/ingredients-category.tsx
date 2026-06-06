@@ -27,7 +27,7 @@ export const IngredientsCategory = forwardRef<
   TIngredientsCategoryProps
 >(({ title, titleRef, ingredients }, ref) => {
   /** TODO: взять переменную из стора */
-  const allIngredients = useSelector(getIngredients);
+  //const allIngredients = useSelector(getIngredients);
   const burgerConstructor = useSelector(
     (state): TBurgerConstructorState =>
       (state as { burgerConstructor?: TBurgerConstructorState })
@@ -52,7 +52,8 @@ export const IngredientsCategory = forwardRef<
     <IngredientsCategoryUI
       title={title}
       titleRef={titleRef}
-      ingredients={allIngredients}
+      //ingredients={allIngredients}
+      ingredients={ingredients}
       ingredientsCounters={ingredientsCounters}
       ref={ref}
     />

@@ -17,9 +17,15 @@ export const BurgerIngredients: FC = () => {
   //const buns = [];
   //const mains = [];
   //const sauces = [];
+  // Отладка: смотрим реальные данные
+  //console.log('Все ингредиенты:', ingredients);
+
   const buns = ingredients.filter((item) => item.type === 'bun');
   const mains = ingredients.filter((item) => item.type === 'main');
   const sauces = ingredients.filter((item) => item.type === 'sauce');
+  //console.log('Все buns:', buns);
+  //console.log('Все mains:', mains);
+  //console.log('Все sauces:', sauces);
 
   const [currentTab, setCurrentTab] = useState<TTabMode>('bun');
   const titleBunRef = useRef<HTMLHeadingElement>(null);
