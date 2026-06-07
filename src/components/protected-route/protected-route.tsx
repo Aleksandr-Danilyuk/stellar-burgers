@@ -1,7 +1,6 @@
 import { useSelector } from '../../services/store';
 import { Preloader } from '@ui';
-//import { Preloader} from '../ui/preloader/preloader';
-//import { isAuthCheckedSelector, userDataSelector } from '../../services/store/selectors';
+import { getIsAuthChecked, getUser } from '../../services/slices/userSlice';
 import { Navigate, useLocation } from 'react-router';
 
 type ProtectedRouteProps = {
@@ -13,10 +12,10 @@ export const ProtectedRoute = ({
   onlyUnAuth,
   children
 }: ProtectedRouteProps) => {
-  //const isAuthChecked = useSelector(isAuthCheckedSelector); //  isAuthCheckedSelector — селектор получения состояния загрузки пользователя
-  //const user = useSelector(userDataSelector); //  userDataSelector — селектор получения пользователя из store
-  const user = '123';
-  const isAuthChecked = true;
+  const isAuthChecked = useSelector(getIsAuthChecked); //  getIsAuthChecked — селектор получения состояния загрузки пользователя
+  const user = useSelector(getUser); //  getUser — селектор получения пользователя из store
+  //const user = '123';
+  //const isAuthChecked = true;
   const location = useLocation();
 
   if (!isAuthChecked) {

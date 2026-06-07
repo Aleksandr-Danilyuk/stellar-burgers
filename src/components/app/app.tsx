@@ -19,6 +19,7 @@ import {
   getIngredientsLoading,
   getIngredientsError
 } from '../../services/slices/ingredientsSlice';
+import { checkUserAuthThunk } from '../../services/slices/userSlice';
 
 import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 
@@ -49,6 +50,7 @@ const App = () => {
 
   useEffect(() => {
     dispatch(fetchIngredientsThunk());
+    dispatch(checkUserAuthThunk());
   }, [dispatch]);
 
   const closeModal = () => {
@@ -98,7 +100,7 @@ const App = () => {
             <Route
               path='/register'
               element={
-                <ProtectedRoute>
+                <ProtectedRoute onlyUnAuth>
                   <Register />
                 </ProtectedRoute>
               }
@@ -106,7 +108,7 @@ const App = () => {
             <Route
               path='/forgot-password'
               element={
-                <ProtectedRoute>
+                <ProtectedRoute onlyUnAuth>
                   <ForgotPassword />
                 </ProtectedRoute>
               }
