@@ -1,4 +1,10 @@
-import { ConstructorPage, Feed, NotFound404 } from '@pages';
+import {
+  ConstructorPage,
+  Feed,
+  IngredientPage,
+  WrapperPage,
+  NotFound404
+} from '@pages';
 import '../../index.css';
 import styles from './app.module.css';
 
@@ -14,7 +20,7 @@ import {
   getIngredientsError
 } from '../../services/slices/ingredientsSlice';
 
-import { Route, Routes, Navigate } from 'react-router-dom';
+import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 
 import { OrderInfo } from '../order-info';
 import { Modal } from '../modal';
@@ -37,9 +43,17 @@ const App = () => {
   const ingredients = useSelector(getIngredients);
   const error = useSelector(getIngredientsError);
 
+  const location = useLocation();
+  const navigate = useNavigate();
+  const background = location.state as { background?: Location };
+
   useEffect(() => {
     dispatch(fetchIngredientsThunk());
   }, [dispatch]);
+
+  const closeModal = () => {
+    navigate(-1);
+  };
 
   return (
     <div className={styles.app}>
@@ -51,91 +65,110 @@ const App = () => {
           {error}
         </div>
       ) : ingredients.length > 0 ? (
-        //<ConstructorPage />
-        <Routes>
-          <Route path='/' element={<ConstructorPage />} />
-          <Route path='/feed' element={<Feed />} />
-          <Route
-            path='/feed/:number'
-            element={
-              <Modal title='' onClose={() => {}}>
-                <OrderInfo />
-              </Modal>
-            }
-          />{' '}
-          {/* модальное с дополнительной информацией */}
-          <Route
-            path='/ingredients/:id'
-            element={
-              <Modal title='' onClose={() => {}}>
-                <IngredientDetails />
-              </Modal>
-            }
-          />{' '}
-          {/* модальное с дополнительной информацией */}
-          {/* Защищённые маршруты */}
-          <Route
-            path='/login'
-            element={
-              <ProtectedRoute onlyUnAuth>
-                <Login />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path='/register'
-            element={
-              <ProtectedRoute>
-                <Register />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path='/forgot-password'
-            element={
-              <ProtectedRoute>
-                <ForgotPassword />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path='/reset-password'
-            element={
-              <ProtectedRoute>
-                <ResetPassword />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path='/profile'
-            element={
-              <ProtectedRoute>
-                <Profile />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path='/profile/orders'
-            element={
-              <ProtectedRoute>
-                <ProfileOrders />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path='/profile/orders/:number'
-            element={
-              <ProtectedRoute>
-                <Modal title='' onClose={() => {}}>
+        <>
+          <Routes location={background?.background || location}>
+            <Route path='/' element={<ConstructorPage />} />
+            <Route path='/feed' element={<Feed />} />
+            <Route
+              path='/feed/:number'
+              element={
+                <Modal title='' onClose={closeModal}>
                   <OrderInfo />
                 </Modal>
-              </ProtectedRoute>
-            }
-          />{' '}
-          {/* модальное с доп инфой*/}
-          {/* Страница 404 */}
-          <Route path='*' element={<NotFound404 />} />
-        </Routes>
+              }
+            />
+            {/* <Route path='/ingredients/:id' element={<IngredientPage />} /> */}
+            <Route
+              path='/ingredients/:id'
+              element={
+                <WrapperPage>
+                  <IngredientPage />
+                </WrapperPage>
+              }
+            />
+            {/* Защищённые маршруты */}
+            <Route
+              path='/login'
+              element={
+                <ProtectedRoute onlyUnAuth>
+                  <Login />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path='/register'
+              element={
+                <ProtectedRoute>
+                  <Register />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path='/forgot-password'
+              element={
+                <ProtectedRoute>
+                  <ForgotPassword />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path='/reset-password'
+              element={
+                <ProtectedRoute>
+                  <ResetPassword />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path='/profile'
+              element={
+                <ProtectedRoute>
+                  <Profile />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path='/profile/orders'
+              element={
+                <ProtectedRoute>
+                  <ProfileOrders />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path='/profile/orders/:number'
+              element={
+                <ProtectedRoute>
+                  <Modal title='' onClose={closeModal}>
+                    <OrderInfo />
+                  </Modal>
+                </ProtectedRoute>
+              }
+            />
+            {/* Страница 404 */}
+            <Route path='*' element={<NotFound404 />} />
+          </Routes>
+          {background?.background && (
+            <Routes>
+              <Route
+                path='/feed/:number'
+                element={
+                  <Modal title='Детали feed' onClose={closeModal}>
+                    <OrderInfo />
+                  </Modal>
+                }
+              />
+              <Route
+                path='/ingredients/:id'
+                element={
+                  <Modal title='Детали ингредиента' onClose={closeModal}>
+                    <IngredientDetails />
+                  </Modal>
+                }
+              />
+            </Routes>
+          )}
+        </>
       ) : (
         <div className={`${styles.title} text text_type_main-medium pt-4`}>
           Нет игредиентов
