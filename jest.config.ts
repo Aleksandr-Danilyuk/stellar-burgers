@@ -207,7 +207,8 @@ const config: JestConfigWithTsJest = {
               // настройки для ts-jest
             },
           ],
-        }
+        },
+  testPathIgnorePatterns: ['/node_modules/', '<rootDir>/tests/']
 };
 
 
