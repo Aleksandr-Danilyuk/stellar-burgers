@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1780937356053" clover="3.2.0">
-  <project timestamp="1780937356053" name="All files">
+<coverage generated="1780938205860" clover="3.2.0">
+  <project timestamp="1780938205860" name="All files">
     <metrics statements="545" coveredstatements="318" conditionals="25" coveredconditionals="21" methods="37" coveredmethods="11" elements="607" coveredelements="350" complexity="0" loc="545" ncloc="545" packages="2" files="4" classes="4"/>
     <package name="services.slices">
       <metrics statements="241" coveredstatements="209" conditionals="25" coveredconditionals="21" methods="19" coveredmethods="11"/>
-      <file name="burgerConstructorSlice.ts" path="/Users/ruadaan/Working/Dev/final12/stellar-burgers/src/services/slices/burgerConstructorSlice.ts">
+      <file name="burgerConstructorSlice.ts" path="/Users/ruadaan/Обучение/Ядекс Практикум Full Stack developer/Мастерская/Практические работы/dev/stellar-burgers/src/services/slices/burgerConstructorSlice.ts">
         <metrics statements="169" coveredstatements="144" conditionals="18" coveredconditionals="15" methods="13" coveredmethods="8"/>
         <line num="1" count="1" type="stmt"/>
         <line num="2" count="1" type="stmt"/>
@@ -176,7 +176,7 @@
         <line num="168" count="1" type="stmt"/>
         <line num="169" count="1" type="stmt"/>
       </file>
-      <file name="ingredientsSlice.ts" path="/Users/ruadaan/Working/Dev/final12/stellar-burgers/src/services/slices/ingredientsSlice.ts">
+      <file name="ingredientsSlice.ts" path="/Users/ruadaan/Обучение/Ядекс Практикум Full Stack developer/Мастерская/Практические работы/dev/stellar-burgers/src/services/slices/ingredientsSlice.ts">
         <metrics statements="72" coveredstatements="65" conditionals="7" coveredconditionals="6" methods="6" coveredmethods="3"/>
         <line num="1" count="1" type="stmt"/>
         <line num="2" count="1" type="stmt"/>
@@ -254,7 +254,7 @@
     </package>
     <package name="utils">
       <metrics statements="304" coveredstatements="109" conditionals="0" coveredconditionals="0" methods="18" coveredmethods="0"/>
-      <file name="burger-api.ts" path="/Users/ruadaan/Working/Dev/final12/stellar-burgers/src/utils/burger-api.ts">
+      <file name="burger-api.ts" path="/Users/ruadaan/Обучение/Ядекс Практикум Full Stack developer/Мастерская/Практические работы/dev/stellar-burgers/src/utils/burger-api.ts">
         <metrics statements="257" coveredstatements="107" conditionals="0" coveredconditionals="0" methods="15" coveredmethods="0"/>
         <line num="1" count="1" type="stmt"/>
         <line num="2" count="1" type="stmt"/>
@@ -514,7 +514,7 @@
         <line num="256" count="0" type="stmt"/>
         <line num="257" count="0" type="stmt"/>
       </file>
-      <file name="cookie.ts" path="/Users/ruadaan/Working/Dev/final12/stellar-burgers/src/utils/cookie.ts">
+      <file name="cookie.ts" path="/Users/ruadaan/Обучение/Ядекс Практикум Full Stack developer/Мастерская/Практические работы/dev/stellar-burgers/src/utils/cookie.ts">
         <metrics statements="47" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="3" coveredmethods="0"/>
         <line num="1" count="0" type="stmt"/>
         <line num="2" count="0" type="stmt"/>
