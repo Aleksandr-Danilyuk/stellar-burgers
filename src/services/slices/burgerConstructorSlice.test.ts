@@ -70,8 +70,8 @@ const mainB: TConstructorIngredient = {
   image_mobile: 'main-b-image-mobile'
 };
 
-describe('burgerConstructor reducer', () => {
-  it('should return initial state for unknown action with undefined state', () => {
+describe('редьюсер конструктора бургера', () => {
+  it('возвращает начальное состояние для неизвестного экшена при undefined state', () => {
     const state = reducer(undefined, { type: 'UNKNOWN' });
 
     expect(state).toEqual({
@@ -85,14 +85,14 @@ describe('burgerConstructor reducer', () => {
     });
   });
 
-  it('should handle addIngredient for bun', () => {
+  it('добавляет булку в поле bun через addIngredient', () => {
     const state = reducer(undefined, addIngredient(bun));
 
     expect(state.constructorItems.bun).toEqual(bun);
     expect(state.constructorItems.ingredients).toEqual([]);
   });
 
-  it('should handle addIngredient for non-bun', () => {
+  it('добавляет небулочный ингредиент в массив constructorItems.ingredients через addIngredient', () => {
     const state = reducer(undefined, addIngredient(sauce));
 
     expect(state.constructorItems.ingredients).toHaveLength(1);
@@ -100,7 +100,7 @@ describe('burgerConstructor reducer', () => {
     expect(state.constructorItems.ingredients[0].id).toEqual(expect.any(String));
   });
 
-  it('should handle removeIngredient', () => {
+  it('удаляет ингредиент из конструктора по id через removeIngredient', () => {
     const prevState = {
       constructorItems: {
         bun,
@@ -116,7 +116,7 @@ describe('burgerConstructor reducer', () => {
     expect(state.constructorItems.ingredients).toEqual([mainB]);
   });
 
-  it('should handle moveIngredientUp', () => {
+  it('перемещает ингредиент на позицию выше через moveIngredientUp', () => {
     const prevState = {
       constructorItems: {
         bun,
@@ -132,7 +132,7 @@ describe('burgerConstructor reducer', () => {
     expect(state.constructorItems.ingredients).toEqual([mainB, mainA]);
   });
 
-  it('should handle moveIngredientDown', () => {
+  it('перемещает ингредиент на позицию ниже через moveIngredientDown', () => {
     const prevState = {
       constructorItems: {
         bun,
@@ -148,7 +148,7 @@ describe('burgerConstructor reducer', () => {
     expect(state.constructorItems.ingredients).toEqual([mainB, mainA]);
   });
 
-  it('should handle clearConstructor', () => {
+  it('очищает конструктор через clearConstructor', () => {
     const prevState = {
       constructorItems: {
         bun,
@@ -167,7 +167,7 @@ describe('burgerConstructor reducer', () => {
     });
   });
 
-  it('should handle clearOrderModalData', () => {
+  it('сбрасывает данные модального окна заказа через clearOrderModalData', () => {
     const prevState = {
       constructorItems: {
         bun,
@@ -183,7 +183,7 @@ describe('burgerConstructor reducer', () => {
     expect(state.orderModalData).toBeNull();
   });
 
-  it('should handle createOrderThunk.pending', () => {
+  it('при createOrderThunk.pending включает флаг запроса и очищает ошибку', () => {
     const prevState = {
       constructorItems: {
         bun,
@@ -200,7 +200,7 @@ describe('burgerConstructor reducer', () => {
     expect(state.error).toBeNull();
   });
 
-  it('should handle createOrderThunk.fulfilled', () => {
+  it('при createOrderThunk.fulfilled сохраняет номер заказа, выключает флаг запроса и очищает конструктор', () => {
     const prevState = {
       constructorItems: {
         bun,
@@ -224,7 +224,7 @@ describe('burgerConstructor reducer', () => {
     });
   });
 
-  it('should handle createOrderThunk.rejected with payload', () => {
+  it('при createOrderThunk.rejected записывает ошибку из payload и выключает флаг запроса', () => {
     const prevState = {
       constructorItems: {
         bun,

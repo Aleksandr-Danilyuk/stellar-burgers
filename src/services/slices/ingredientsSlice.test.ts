@@ -31,8 +31,8 @@ const ingredientB: TIngredient = {
   image_mobile: 'image-mobile-b'
 };
 
-describe('ingredients reducer', () => {
-  it('should return initial state for unknown action with undefined state', () => {
+describe('редьюсер ингредиентов', () => {
+  it('возвращает начальное состояние для неизвестного экшена при undefined state', () => {
     const state = reducer(undefined, { type: 'UNKNOWN' });
 
     expect(state).toEqual({
@@ -42,7 +42,7 @@ describe('ingredients reducer', () => {
     });
   });
 
-  it('should handle setIngredients', () => {
+  it('сохраняет список ингредиентов через setIngredients', () => {
     const state = reducer(undefined, setIngredients([ingredientA, ingredientB]));
 
     expect(state.ingredients).toEqual([ingredientA, ingredientB]);
@@ -50,7 +50,7 @@ describe('ingredients reducer', () => {
     expect(state.error).toBeNull();
   });
 
-  it('should handle clearIngredientsError', () => {
+  it('очищает ошибку через clearIngredientsError и не меняет список ингредиентов', () => {
     const prevState = {
       isLoading: false,
       error: 'Some error',
@@ -63,7 +63,7 @@ describe('ingredients reducer', () => {
     expect(state.ingredients).toEqual([ingredientA]);
   });
 
-  it('should handle fetchIngredientsThunk.pending', () => {
+  it('при fetchIngredientsThunk.pending включает загрузку и сбрасывает ошибку', () => {
     const prevState = {
       isLoading: false,
       error: 'Old error',
@@ -77,7 +77,7 @@ describe('ingredients reducer', () => {
     expect(state.ingredients).toEqual([ingredientA]);
   });
 
-  it('should handle fetchIngredientsThunk.fulfilled', () => {
+  it('при fetchIngredientsThunk.fulfilled сохраняет полученные ингредиенты и завершает загрузку', () => {
     const prevState = {
       isLoading: true,
       error: null,
@@ -95,7 +95,7 @@ describe('ingredients reducer', () => {
     expect(state.ingredients).toEqual(payload);
   });
 
-  it('should handle fetchIngredientsThunk.rejected with payload', () => {
+  it('при fetchIngredientsThunk.rejected записывает текст ошибки из payload и завершает загрузку', () => {
     const prevState = {
       isLoading: true,
       error: null,
