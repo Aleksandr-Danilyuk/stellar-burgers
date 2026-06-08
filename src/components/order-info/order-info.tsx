@@ -3,19 +3,56 @@ import { Preloader } from '../ui/preloader';
 import { OrderInfoUI } from '../ui/order-info';
 import { TIngredient } from '@utils-types';
 
-export const OrderInfo: FC = () => {
-  /** TODO: взять переменные orderData и ingredients из стора */
-  const orderData = {
-    createdAt: '',
-    ingredients: [],
-    _id: '',
-    status: '',
-    name: '',
-    updatedAt: 'string',
-    number: 0
-  };
+import { useDispatch, useSelector } from '../../services/store';
+import { getIngredients } from '../../services/slices/ingredientsSlice';
+import {
+  fetchOrderByNumberThunk,
+  getFeedOrders,
+  getSelectedOrder,
+  getSelectedOrderLoading,
+  getUserOrders
+} from '../../services/slices/ordersSlice';
+import { useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 
-  const ingredients: TIngredient[] = [];
+export const OrderInfo: FC = () => {
+  const dispatch = useDispatch();
+  const { number } = useParams<{ number: string }>();
+  const ingredients = useSelector(getIngredients);
+  const selectedOrder = useSelector(getSelectedOrder);
+  const feedOrders = useSelector(getFeedOrders);
+  const userOrders = useSelector(getUserOrders);
+  const isOrderLoading = useSelector(getSelectedOrderLoading);
+
+  useEffect(() => {
+    if (!number) {
+      return;
+    }
+
+    const orderNumber = Number(number);
+    if (Number.isNaN(orderNumber)) {
+      return;
+    }
+
+    dispatch(fetchOrderByNumberThunk(orderNumber));
+  }, [dispatch, number]);
+
+  const orderData = useMemo(() => {
+    if (!number) {
+      return null;
+    }
+
+    const orderNumber = Number(number);
+    if (Number.isNaN(orderNumber)) {
+      return null;
+    }
+
+    return selectedOrder?.number === orderNumber
+      ? selectedOrder
+      : feedOrders.find((item) => item.number === orderNumber) ||
+          userOrders.find((item) => item.number === orderNumber) ||
+          null;
+  }, [number, selectedOrder, feedOrders, userOrders]);
 
   /* Готовим данные для отображения */
   const orderInfo = useMemo(() => {
@@ -59,7 +96,7 @@ export const OrderInfo: FC = () => {
     };
   }, [orderData, ingredients]);
 
-  if (!orderInfo) {
+  if (!orderInfo || isOrderLoading) {
     return <Preloader />;
   }
 

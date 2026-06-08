@@ -2,6 +2,10 @@ import { setCookie, getCookie } from './cookie';
 import { TIngredient, TOrder, TOrdersData, TUser } from './types';
 
 const URL = process.env.BURGER_API_URL;
+//const URL = 'https://norma.education-services.ru/api';
+//console.log('!!!!!!!!!!!!!!!!!!!!!!!!!');
+//console.log('BURGER_API_URL from env:', process.env.BURGER_API_URL);
+//console.log('Full URL being used:', URL);
 
 const checkResponse = <T>(res: Response): Promise<T> =>
   res.ok ? res.json() : res.json().then((err) => Promise.reject(err));
