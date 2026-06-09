@@ -1,5 +1,6 @@
 import {
   burgerConstructorSlice,
+  initialState,
   addIngredient,
   removeIngredient,
   moveIngredientUp,
@@ -74,15 +75,7 @@ describe('редьюсер конструктора бургера', () => {
   it('возвращает начальное состояние для неизвестного экшена при undefined state', () => {
     const state = reducer(undefined, { type: 'UNKNOWN' });
 
-    expect(state).toEqual({
-      constructorItems: {
-        bun: null,
-        ingredients: []
-      },
-      orderRequest: false,
-      orderModalData: null,
-      error: null
-    });
+    expect(state).toEqual(initialState);
   });
 
   it('добавляет булку в поле bun через addIngredient', () => {
@@ -102,13 +95,11 @@ describe('редьюсер конструктора бургера', () => {
 
   it('удаляет ингредиент из конструктора по id через removeIngredient', () => {
     const prevState = {
+      ...initialState,
       constructorItems: {
         bun,
         ingredients: [mainA, mainB]
-      },
-      orderRequest: false,
-      orderModalData: null,
-      error: null
+      }
     };
 
     const state = reducer(prevState, removeIngredient('c-1'));
@@ -118,13 +109,11 @@ describe('редьюсер конструктора бургера', () => {
 
   it('перемещает ингредиент на позицию выше через moveIngredientUp', () => {
     const prevState = {
+      ...initialState,
       constructorItems: {
         bun,
         ingredients: [mainA, mainB]
-      },
-      orderRequest: false,
-      orderModalData: null,
-      error: null
+      }
     };
 
     const state = reducer(prevState, moveIngredientUp(1));
@@ -134,13 +123,11 @@ describe('редьюсер конструктора бургера', () => {
 
   it('перемещает ингредиент на позицию ниже через moveIngredientDown', () => {
     const prevState = {
+      ...initialState,
       constructorItems: {
         bun,
         ingredients: [mainA, mainB]
-      },
-      orderRequest: false,
-      orderModalData: null,
-      error: null
+      }
     };
 
     const state = reducer(prevState, moveIngredientDown(0));
@@ -150,13 +137,11 @@ describe('редьюсер конструктора бургера', () => {
 
   it('очищает конструктор через clearConstructor', () => {
     const prevState = {
+      ...initialState,
       constructorItems: {
         bun,
         ingredients: [mainA, mainB]
-      },
-      orderRequest: false,
-      orderModalData: null,
-      error: null
+      }
     };
 
     const state = reducer(prevState, clearConstructor());
@@ -169,13 +154,12 @@ describe('редьюсер конструктора бургера', () => {
 
   it('сбрасывает данные модального окна заказа через clearOrderModalData', () => {
     const prevState = {
+      ...initialState,
       constructorItems: {
         bun,
         ingredients: [mainA]
       },
-      orderRequest: false,
       orderModalData: { number: 12345 },
-      error: null
     };
 
     const state = reducer(prevState, clearOrderModalData());
@@ -185,12 +169,12 @@ describe('редьюсер конструктора бургера', () => {
 
   it('при createOrderThunk.pending включает флаг запроса и очищает ошибку', () => {
     const prevState = {
+      ...initialState,
       constructorItems: {
         bun,
         ingredients: [mainA]
       },
       orderRequest: false,
-      orderModalData: null,
       error: 'old error'
     };
 
@@ -202,13 +186,12 @@ describe('редьюсер конструктора бургера', () => {
 
   it('при createOrderThunk.fulfilled сохраняет номер заказа, выключает флаг запроса и очищает конструктор', () => {
     const prevState = {
+      ...initialState,
       constructorItems: {
         bun,
         ingredients: [mainA, mainB]
       },
-      orderRequest: true,
-      orderModalData: null,
-      error: null
+      orderRequest: true
     };
 
     const state = reducer(
@@ -226,13 +209,12 @@ describe('редьюсер конструктора бургера', () => {
 
   it('при createOrderThunk.rejected записывает ошибку из payload и выключает флаг запроса', () => {
     const prevState = {
+      ...initialState,
       constructorItems: {
         bun,
         ingredients: [mainA]
       },
-      orderRequest: true,
-      orderModalData: null,
-      error: null
+      orderRequest: true
     };
 
     const state = reducer(
