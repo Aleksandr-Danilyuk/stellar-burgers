@@ -44,42 +44,41 @@ test.beforeEach(async ({ page }) => {
   await applyHarMocks(page);
 });
 
-// Тест «добавляет ингредиент из списка в конструктор»
-test('добавляет ингредиент из списка в конструктор', async ({ page }) => {
-  await openApp(page);
+test.describe('работа с ингредиентами', () => {
+  test('добавляет ингредиент из списка в конструктор', async ({ page }) => {
+    await openApp(page);
 
-   // Проверка, что булки ещё нет в конструкторе до добавления
-  await expect(page.getByText(`${INGREDIENTS.bun} (верх)`)).toBeHidden();
-  await expect(page.getByText(`${INGREDIENTS.bun} (низ)`)).toBeHidden();
-  //await expect(page.getByText(`${INGREDIENTS.bun} (верх)`)).toHaveCount(0);
-  //await expect(page.getByText(`${INGREDIENTS.bun} (низ)`)).toHaveCount(0);
+    // Проверка, что булки ещё нет в конструкторе до добавления
+    await expect(page.getByText(`${INGREDIENTS.bun} (верх)`)).toBeHidden();
+    await expect(page.getByText(`${INGREDIENTS.bun} (низ)`)).toBeHidden();
 
-  await addIngredient(page, INGREDIENTS.bun);
+    await addIngredient(page, INGREDIENTS.bun);
 
-  // Проверка, что булки появились после добавления
-  await expect(page.getByText(`${INGREDIENTS.bun} (верх)`)).toBeVisible();
-  await expect(page.getByText(`${INGREDIENTS.bun} (низ)`)).toBeVisible();
+    // Проверка, что булки появились после добавления
+    await expect(page.getByText(`${INGREDIENTS.bun} (верх)`)).toBeVisible();
+    await expect(page.getByText(`${INGREDIENTS.bun} (низ)`)).toBeVisible();
+  });
 });
 
-// Тест «открывает и закрывает модальное окно ингредиента»
-test('открывает и закрывает модальное окно ингредиента', async ({ page }) => {
-  await openApp(page);
+test.describe('модальное окно ингредиента', () => {
+  test('открывает и закрывает модальное окно ингредиента', async ({ page }) => {
+    await openApp(page);
 
-  //await expect(page.locator('#modals').locator('*')).toHaveCount(0);
     // Проверка, что модального окна нет до клика
-  await expect(page.locator('#modals')).toBeEmpty();
+    await expect(page.locator('#modals')).toBeEmpty();
 
-  await openIngredientModal(page, INGREDIENTS.main);
-  await page.keyboard.press('Escape');
-  await expect(page.locator('#modals').getByText('Детали ингредиента')).toBeHidden();
-});
+    await openIngredientModal(page, INGREDIENTS.main);
+    await page.keyboard.press('Escape');
+    await expect(page.locator('#modals').getByText('Детали ингредиента')).toBeHidden();
+  });
 
-test('показывает данные выбранного ингредиента в модальном окне', async ({ page }) => {
-  await openApp(page);
+  test('показывает данные выбранного ингредиента в модальном окне', async ({ page }) => {
+    await openApp(page);
 
-  await openIngredientModal(page, INGREDIENTS.main);
-  await expect(page.locator('#modals').getByRole('heading', { name: INGREDIENTS.main })).toBeVisible();
-  await expect(page.locator('#modals').getByText('4242')).toBeVisible();
+    await openIngredientModal(page, INGREDIENTS.main);
+    await expect(page.locator('#modals').getByRole('heading', { name: INGREDIENTS.main })).toBeVisible();
+    await expect(page.locator('#modals').getByText('4242')).toBeVisible();
+  });
 });
 
 test.describe('создание заказа', () => {
@@ -105,21 +104,17 @@ test.describe('создание заказа', () => {
     // Проверка отсутствия подсказок «Выберите булки» / «Выберите начинку» до оформления заказа
     await expect(page.getByText('Выберите булки')).toBeHidden();
     await expect(page.getByText('Выберите начинку')).toBeHidden();
-    //await expect(page.getByText('Выберите булки')).toHaveCount(0);
-    //await expect(page.getByText('Выберите начинку')).toHaveCount(0);
 
     await addIngredient(page, INGREDIENTS.bun);
     await addIngredient(page, INGREDIENTS.main);
     await addIngredient(page, INGREDIENTS.sauce);
 
     // Проверка, что модалки с номером заказа нет до клика «Оформить заказ»
-    //await expect(page.locator('#modals').getByText('77777')).toHaveCount(0);
     await expect(page.locator('#modals').getByText('77777')).toBeHidden();
 
     await page.getByRole('button', { name: 'Оформить заказ' }).click();
 
     await expect(page.locator('#modals').getByText('77777')).toBeVisible();
-    //await expect(page.getByText('77777')).toBeVisible();
 
     await page.keyboard.press('Escape');
 
